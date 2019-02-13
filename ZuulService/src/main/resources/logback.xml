@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	
+	<springProperty scope="context" name="springAppName" source="spring.application.name"/>
+	
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- Log message format -->
+		<encoder>
+			<pattern>%d{dd-MM-YY HH:mm:ss.SSS}  %5p [${springAppName},%X{X-B3-TraceId:-}] [%t] %-5level %logger{36}.%M[] - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/app/iag/phoenix/logs/phoenix-process-studio-svc/phoenix-process-studio-svc.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>/app/iag/phoenix/logs/phoenix-process-studio-svc/archive/process-studio-service.log.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<Pattern>%d{dd-MM-YY HH:mm:ss.SSS} [%t] %-5level %logger{35}.%M[] - %msg %n
+			</Pattern>
+		</encoder>
+	</appender>
+	
+	<!-- <logger name="org.springframework.amqp" level="DEBUG"/> -->
+	
+	<!-- <logger name="com.rabbitmq" level="TRACE"/> -->
+
+	<logger name="org.springframework.cloud.netflix.zuul" level="TRACE"/>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" /> 
+		<!-- <appender-ref ref="dailyRollingFileAppender" /> -->
+	</root>
+</configuration>

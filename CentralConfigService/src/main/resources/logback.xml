@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="consoleAppender"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<!-- Log message format -->
+		<encoder>
+			<pattern>%d{dd-MM-YY HH:mm:ss.SSS} [%t] %-5level %logger{36}.%M[] -
+				%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="dailyRollingFileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/app/iag/phoenix/logs/CentralConfigService/CentralConfigService.log
+		</File>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>/app/iag/phoenix/logs/CentralConfigService/archive/CentralConfigService.log.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<Pattern>%d{dd-MM-YY HH:mm:ss.SSS} [%t] %-5level %logger{35}.%M[] -
+				%msg %n</Pattern>
+		</encoder>
+	</appender>
+
+	<!-- <logger name="org.springframework.amqp" level="TRACE"/> -->
+	
+	<logger name="org.springframework.jdbc.core" level="TRACE"/>
+
+	<!-- <logger name="com.rabbitmq" level="TRACE"/> -->
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+		<!-- <appender-ref ref="dailyRollingFileAppender" /> -->
+	</root>
+
+</configuration>
